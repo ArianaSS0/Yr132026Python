@@ -236,7 +236,7 @@ def edit_curio():
                     "UPDATE curios SET name = ? WHERE id = ?",
                     (new_value, curio_id)
                 )
-            elif edit_option.get() == "Category":
+            elif edit_option.get() == "Category": 
                 new_value = category_choice.get()
                 cursor.execute(
                     "UPDATE curios SET category = ? WHERE id = ?",

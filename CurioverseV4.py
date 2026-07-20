@@ -128,12 +128,12 @@ footer.pack_propagate(False) #prevents frame from shrinking?
 footer.pack(side="bottom", fill="x") #locates at bottom of tab
 
 #...............................................................................................................
-#Button 1
+#Button 1  
 #Allows user to add a curio to the database
-from add_curioV4 import add_curioV4
+from add_curioV4 import add_curio
 
 # leftover button operation formatting
-button_add = tk.Button(footer, font = ("Arial",12), width = 10, height = 1, text = "Add Curio", command=add_curio)
+button_add = tk.Button(footer, font = ("Arial",12), width = 10, height = 1, text = "Add Curio", command=lambda: add_curio(root,cursor,connection,date_now,category_data))
 button_add.pack(side="left", padx=12, pady=5) #button padding from boarder
 
 #...............................................................................................................

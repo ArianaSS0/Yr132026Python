@@ -1,5 +1,5 @@
-# Ok so here im going to create the GUI interactive interface:
-# I curently coyp pasted everything from V2 but i will eventually delete things I no longer need.
+# V4, im up to splitting files and adding the simulation game elements
+# My hopes are that this will be considered a finished product 
 #===============================================================================================================
 print ("\033[1;36;40m Program running \033[0m") #Cyan text
 print("")
@@ -130,59 +130,7 @@ footer.pack(side="bottom", fill="x") #locates at bottom of tab
 #...............................................................................................................
 #Button 1
 #Allows user to add a curio to the database
-def add_curio():
-    print("add_curio Button pressed")
-    # Creates popup
-    popup1 = tk.Toplevel(root)
-    popup1.title("Add Curio")
-    popup1.geometry("250x200") #Y,X
-    #makes curio state automatically active
-    state2 = ("Active")
-
-    #user input to make new curio
-    #lable 1
-    tk.Label(popup1, text="Name").pack()
-    name2 = tk.Entry(popup1)
-    name2.pack()
-
-    #lable 2
-    tk.Label(popup1, text="Category").pack()
-    category2 = tk.StringVar()
-    category2.set(category_data[0])
-    tk.OptionMenu(popup1, category2, *category_data).pack()
-    
-    #lable 3
-    tk.Label(popup1, text="Description").pack()
-    description2 = tk.Entry(popup1)
-    description2.pack()
-
-    def save_curio():
-        name = name2.get()
-        category = category2.get()
-        description = description2.get()
-        state = state2
-        cursor.execute("""
-                INSERT INTO curios (
-                            name, 
-                            category, 
-                            description, 
-                            date_created,
-                            status
-                        )
-                VALUES ( 
-                            ?, 
-                            ?, 
-                            ?,
-                            ?,
-                            ?
-                        )
-                            """, (name, category, description, date_now, state2)) # Puts Values inside the database
-        connection.commit()
-        print("Curio sucsessfully created")
-        popup1.destroy()
-
-    #save button
-    tk.Button(popup1,text="save", command=save_curio).pack(pady=10)
+from add_curioV4 import add_curioV4
 
 # leftover button operation formatting
 button_add = tk.Button(footer, font = ("Arial",12), width = 10, height = 1, text = "Add Curio", command=add_curio)

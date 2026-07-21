@@ -164,6 +164,13 @@ from view_curioV4 import view_curio
 button_view = tk.Button(footer, font = ("Arial",12), width = 11, height = 1, text = "View Curios", command=lambda: view_curio(root,cursor,connection,date_now,category_data))
 button_view.pack(side="left", padx=12, pady=5)
 
+#Button 5
+#Logg button, when clicked; changes last logged to present day.
+def logg_curio():
+    print("logg_curio Button pressed")
+
+button_logg = tk.Button(footer, font = ("Arial",12), width = 11, height = 1, text = "Logg Curio", command=logg_curio)
+button_logg.pack(side="left", padx=12, pady=5)
 
 #End of footer bar 
 update_time()

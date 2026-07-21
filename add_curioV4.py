@@ -39,6 +39,7 @@ def add_curio(root, cursor, connection, date_now, category_data):
                             category, 
                             description, 
                             date_created,
+                            last_logged,
                             status
                         )
                 VALUES ( 
@@ -46,9 +47,10 @@ def add_curio(root, cursor, connection, date_now, category_data):
                             ?, 
                             ?,
                             ?,
+                            ?,
                             ?
                         )
-                            """, (name, category, description, date_now, state2)) # Puts Values inside the database
+                            """, (name, category, description, date_now, date_now, state2)) # Puts Values inside the database
         connection.commit()
         print("Curio sucsessfully created")
         popup1.destroy()

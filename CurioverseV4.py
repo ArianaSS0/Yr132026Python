@@ -59,7 +59,8 @@ cursor.execute("""
                         name TEXT NOT NULL,
                         category TEXT NOT NULL,
                         description TEXT,
-                        date_created TEXT,
+                        date_created TEXT NOT NULL,
+                        last_logged TEXT NOT NULL,
                         status TEXT NOT NULL
                     ) 
             """) # Creates 6 tables, NOT NULL means no empty input
@@ -73,7 +74,7 @@ print("Database and table successfully generated")
 # Startup #
 
 root = tk.Tk()
-root.title("Curioverse (V3)") #Name
+root.title("Curioverse (V4)") #Name
 root.geometry('500x300') #Width x Hight
 root["bg"] = "#939071" #Bg colour
 
@@ -95,7 +96,7 @@ frame_top = tk.Frame(root)
 frame_top.pack(fill="x")
 
 #all the text and values for the top lable
-tk.Label(frame_top, text="      Date:", font=("Arial", 10, "bold")).pack(side="left")
+tk.Label(frame_top, text="   Date:", font=("Arial", 10, "bold")).pack(side="left")
 tk.Label(frame_top, text=date_now).pack(side="left")
 
 #time updates every minute

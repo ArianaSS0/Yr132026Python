@@ -96,7 +96,7 @@ frame_top = tk.Frame(root)
 frame_top.pack(fill="x")
 
 #all the text and values for the top lable
-tk.Label(frame_top, text="   Date:", font=("Arial", 10, "bold")).pack(side="left")
+tk.Label(frame_top, text="  Date:", font=("Arial", 10, "bold")).pack(side="left")
 tk.Label(frame_top, text=date_now).pack(side="left")
 
 #time updates every minute
@@ -124,7 +124,7 @@ tk.Label(frame_top, text=f"{tempurature}°C").pack(side="left")
 # Footer bar # 
 # (And Buttons!)
 
-footer = tk.Frame(root, width=100, height=80, bg="light yellow") #frame
+footer = tk.Frame(root, width=100, height=60, bg="light yellow") #frame
 footer.pack_propagate(False) #prevents frame from shrinking?
 footer.pack(side="bottom", fill="x") #locates at bottom of tab
 
@@ -134,8 +134,8 @@ footer.pack(side="bottom", fill="x") #locates at bottom of tab
 from add_curioV4 import add_curio
 
 # leftover button operation formatting
-button_add = tk.Button(footer, font = ("Arial",12), width = 10, height = 1, text = "Add Curio", command=lambda: add_curio(root,cursor,connection,date_now,category_data))
-button_add.pack(side="left", padx=12, pady=5) #button padding from boarder
+button_add = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "Add Curio", command=lambda: add_curio(root,cursor,connection,date_now,category_data))
+button_add.pack(side="left", padx=5, pady=2) #button padding from boarder
 
 #...............................................................................................................
 # Button 2
@@ -143,34 +143,102 @@ button_add.pack(side="left", padx=12, pady=5) #button padding from boarder
 from edit_curioV4 import edit_curio
 button_edit = tk.Button(
     footer,
-    font=("Arial", 12),
-    width=10,
+    font=("Arial", 11),
+    width=9,
     height=1,
     text="Edit Curio",
     command=lambda: edit_curio (root,cursor,connection,date_now,category_data))
-button_edit.pack(side="left", padx=12, pady=5)
+button_edit.pack(side="left", padx=5, pady=2)
 
 #...............................................................................................................
 #Button 3
 #Allows user to delete curios
 from delete_curioV4 import delete_curio
-button_delete = tk.Button(footer, font = ("Arial",12), width = 10, height = 1, text = "Delete Curio", command=lambda: delete_curio (root,cursor,connection,date_now,category_data))
-button_delete.pack(side="left", padx=12, pady=5)
+button_delete = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "Delete Curio", command=lambda: delete_curio (root,cursor,connection,date_now,category_data))
+button_delete.pack(side="left", padx=5, pady=2)
 
 #...............................................................................................................
 #Button 4
 #Allows user to view curios
 from view_curioV4 import view_curio
-button_view = tk.Button(footer, font = ("Arial",12), width = 11, height = 1, text = "View Curios", command=lambda: view_curio(root,cursor,connection,date_now,category_data))
-button_view.pack(side="left", padx=12, pady=5)
+button_view = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "View Curios", command=lambda: view_curio(root,cursor,connection,date_now,category_data))
+button_view.pack(side="left", padx=5, pady=2)
 
 #Button 5
 #Logg button, when clicked; changes last logged to present day.
 def logg_curio():
     print("logg_curio Button pressed")
+    popup2 = tk.Toplevel(root)
+    popup2.title("Logg Curio")
+    popup2.geometry("300x220")
 
-button_logg = tk.Button(footer, font = ("Arial",12), width = 11, height = 1, text = "Logg Curio", command=logg_curio)
-button_logg.pack(side="left", padx=12, pady=5)
+    # Curio ID
+    tk.Label(popup2, text="Curio ID").pack()
+    id_entry = tk.Entry(popup2)
+    id_entry.pack()
+    # Field to edit
+    tk.Label(popup2, text="Edit").pack()
+    edit_option = tk.StringVar()
+    edit_option.set("Name")  # Default option
+    tk.OptionMenu(
+        popup2,
+        edit_option,
+         "Name",
+         "Category",
+         "Description"
+        ).pack()
+    
+        # New value
+     tk.Label(popup2, text="New Value").pack()
+        value_entry = tk.Entry(popup2)
+        value_entry.pack()
+    
+        #category dropdown menue
+        tk.Label(popup2, text="Category").pack()
+        category_choice = tk.StringVar()
+        category_choice.set(category_data[0])  # Default selection
+        category_menu = tk.OptionMenu(
+            popup2,
+            category_choice,
+            *category_data)
+        category_menu.pack()
+    
+        def save_edit():
+            try:
+                curio_id = int(id_entry.get())
+                new_value = value_entry.get()
+                if edit_option.get() == "Name":
+                    cursor.execute(
+                        "UPDATE curios SET name = ? WHERE id = ?",
+                        (new_value, curio_id)
+                    )
+                elif edit_option.get() == "Category": 
+                    new_value = category_choice.get()
+                    cursor.execute(
+                        "UPDATE curios SET category = ? WHERE id = ?",
+                        (new_value, curio_id)
+                    )
+                elif edit_option.get() == "Description":
+                    cursor.execute(
+                        "UPDATE curios SET description = ? WHERE id = ?",
+                        (new_value, curio_id)
+                    )
+                connection.commit()
+                if cursor.rowcount == 0:
+                    print("No Curio with that ID found.")
+                else:
+                    print("Curio successfully edited.")
+                    popup2.destroy()
+            except ValueError:
+                print("Please enter a valid ID.")
+        tk.Button(
+            popup2,
+            text="Update",
+            command=save_edit
+        ).pack(pady=10)
+
+button_logg = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "Logg Curio", command=logg_curio)
+button_logg.pack(side="left", padx=5, pady=2)
 
 #End of footer bar 
 update_time()

@@ -164,83 +164,64 @@ from view_curioV4 import view_curio
 button_view = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "View Curios", command=lambda: view_curio(root,cursor,connection,date_now,category_data))
 button_view.pack(side="left", padx=5, pady=2)
 
+#...............................................................................................................
 #Button 5
 #Logg button, when clicked; changes last logged to present day.
 def logg_curio():
     print("logg_curio Button pressed")
-    popup2 = tk.Toplevel(root)
-    popup2.title("Logg Curio")
-    popup2.geometry("300x220")
+    popup3 = tk.Toplevel(root)
+    popup3.title("Logg Curio")
+    popup3.geometry("300x220")
 
     # Curio ID
-    tk.Label(popup2, text="Curio ID").pack()
-    id_entry = tk.Entry(popup2)
-    id_entry.pack()
-    # Field to edit
-    tk.Label(popup2, text="Edit").pack()
-    edit_option = tk.StringVar()
-    edit_option.set("Name")  # Default option
-    tk.OptionMenu(
-        popup2,
-        edit_option,
-         "Name",
-         "Category",
-         "Description"
-        ).pack()
+    tk.Label(popup3, text="Curio ID").pack()
+    id_entry = tk.Entry(popup3)
+    id_entry.pack()  
     
-        # New value
-     tk.Label(popup2, text="New Value").pack()
-        value_entry = tk.Entry(popup2)
-        value_entry.pack()
-    
-        #category dropdown menue
-        tk.Label(popup2, text="Category").pack()
-        category_choice = tk.StringVar()
-        category_choice.set(category_data[0])  # Default selection
-        category_menu = tk.OptionMenu(
-            popup2,
-            category_choice,
-            *category_data)
-        category_menu.pack()
-    
-        def save_edit():
-            try:
-                curio_id = int(id_entry.get())
-                new_value = value_entry.get()
-                if edit_option.get() == "Name":
-                    cursor.execute(
-                        "UPDATE curios SET name = ? WHERE id = ?",
-                        (new_value, curio_id)
-                    )
-                elif edit_option.get() == "Category": 
-                    new_value = category_choice.get()
-                    cursor.execute(
-                        "UPDATE curios SET category = ? WHERE id = ?",
-                        (new_value, curio_id)
-                    )
-                elif edit_option.get() == "Description":
-                    cursor.execute(
-                        "UPDATE curios SET description = ? WHERE id = ?",
-                        (new_value, curio_id)
-                    )
-                connection.commit()
-                if cursor.rowcount == 0:
-                    print("No Curio with that ID found.")
-                else:
-                    print("Curio successfully edited.")
-                    popup2.destroy()
-            except ValueError:
-                print("Please enter a valid ID.")
-        tk.Button(
-            popup2,
-            text="Update",
-            command=save_edit
-        ).pack(pady=10)
+    # New log update
+    def save_logg():
+        try:
+            curio_id = int(id_entry.get())
+            today = datetime.now().strftime("%Y-%m-%d") # Gets current date and user id entry
+            cursor.execute(""" UPDATE curios 
+                            SET last_logged = ?, status = ?
+                            WHERE id = ?"""
+                           ,(today, "Active", curio_id))
+            connection.commit()
+
+            # printing info to play area??? (idk what its called again)
+            if cursor.rowcount == 0:
+                print("No Curio found")
+            else:
+                print("Progress logged")
+                popup3.destroy()
+
+        except ValueError:
+            print("Please enter a valid id")
+    tk.Button(popup3,text="Log Progress",command=save_logg).pack(pady=10)
 
 button_logg = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "Logg Curio", command=logg_curio)
 button_logg.pack(side="left", padx=5, pady=2)
 
 #End of footer bar 
+
+#...............................................................................................................
+# Updating last logged info 
+today = datetime.now() # Gets current date
+for curio_id, last_logged in cursor.fetchall(): 
+    last_logged_date = datetime.strptime(last_logged, "%Y-%m-%d") 
+    days = (datetime.now() - last_logged_date).days
+    cursor.execute("""SELECT id, last_logged FROM curios """)
+    if days > 30: status = "Inactive"
+    else: status = "Active"
+
+    cursor.execute("""UPDATE curios
+                    SET status = ?
+                    WHERE id = ?""",
+                   (status, curio_id))
+    
+
+# running loop and updating time
 update_time()
 root.mainloop() #while if statement for the GUI
 

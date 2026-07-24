@@ -67,6 +67,9 @@ cursor.execute("""
 
 print("Database and table successfully generated")
 
+for row in cursor.fetchall():
+    print(row)
+
 #===============================================================================================================
 # GUI # 
 #===============================================================================================================
@@ -211,14 +214,13 @@ today = datetime.now() # Gets current date
 for curio_id, last_logged in cursor.fetchall(): 
     last_logged_date = datetime.strptime(last_logged, "%Y-%m-%d") 
     days = (datetime.now() - last_logged_date).days
-    cursor.execute("""SELECT id, last_logged FROM curios """)
     if days > 30: status = "Inactive"
     else: status = "Active"
-
     cursor.execute("""UPDATE curios
                     SET status = ?
                     WHERE id = ?""",
                    (status, curio_id))
+    connection.commit()
     
 
 # running loop and updating time

@@ -12,20 +12,22 @@ def view_curio(root, cursor, connection, date_now, category_data):
 
     #Displaying results
     tree = ttk.Treeview(popup4,
-    columns=("ID", "Name", "Category", "Description", "Date", "Status"),
+    columns=("ID", "Name", "Category", "Description", "Date", "Logg", "Status"),
     show="headings")
     tree.heading("ID", text="ID")
     tree.heading("Name", text="Name")
     tree.heading("Category", text="Category")
     tree.heading("Description", text="Description")
     tree.heading("Date", text="Date Created")
+    tree.heading("Logg", text="Last Logged")
     tree.heading("Status", text="Status")
-    tree.column("ID", width=50)
+    tree.column("ID", width=25)
     tree.column("Name", width=120)
-    tree.column("Category", width=100)
+    tree.column("Category", width=80)
     tree.column("Description", width=180)
-    tree.column("Date", width=90)
-    tree.column("Status", width=80)
+    tree.column("Date", width=75)
+    tree.column("Logg", width=75)
+    tree.column("Status", width=50)
     scrollbar = ttk.Scrollbar(
     popup4,
     orient="vertical",
@@ -60,10 +62,4 @@ def view_curio(root, cursor, connection, date_now, category_data):
     tk.Button(
     popup4,
     text="Search", command=search_curios).pack()
-
-    tk.Button(
-    popup4,
-    text="Show All",
-    command=load_all_curios).pack()
-
     print("Displayed Curios")

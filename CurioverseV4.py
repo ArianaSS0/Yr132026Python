@@ -33,7 +33,7 @@ time_now = datetime.now().strftime("%H:%M:%S") #String format time
 date_now = datetime.now().strftime("%Y-%m-%d") #red text hoppfully just error finder mistake :l
 #Setting up Tempurature and weather
 city = "Auckland"
-data1 = requests.get(f"https://wttr.in/{city}?format=j1").json() #calls from javascript
+data1 = requests.get(f"https://wttr.in/{city}?format=j1", timeout=5).json() #calls from javascript
 #Get Tempurature
 tempurature = data1["current_condition"][0]["temp_C"]
 #Get Weather
@@ -66,9 +66,6 @@ cursor.execute("""
             """) # Creates 6 tables, NOT NULL means no empty input
 
 print("Database and table successfully generated")
-
-for row in cursor.fetchall():
-    print(row)
 
 #===============================================================================================================
 # GUI # 
@@ -121,6 +118,31 @@ tk.Label(frame_top, text=f"{tempurature}°C").pack(side="left")
 #===============================================================================================================
 
 # Middle play area #
+
+middle_frame = tk.Frame(root)
+middle_frame.pack(expand=True, fill="both")
+tree = ttk.Treeview(middle_frame,
+    columns=("ID", "Name", "Description", "Category","Logg", "Status"),
+    show="headings")
+tree.heading("ID", text="ID")
+tree.heading("Name", text="Name")
+tree.heading("Category", text="Category")
+tree.heading("Logg", text="Last Logged")
+tree.heading("Status", text="Status")
+tree.column("ID", width=25)
+tree.column("Name", width=120)
+tree.column("Category", width=80)
+tree.column("Logg", width=75)
+tree.column("Status", width=50)
+scrollbar = ttk.Scrollbar(
+    middle_frame,
+    orient="vertical",
+    command=tree.yview)
+tree.configure(yscrollcommand=scrollbar.set)
+scrollbar.pack(side="right", fill="y")
+tree.pack(expand=True, fill="both")
+cursor.execute("SELECT id, last_logged FROM curios")
+for curio_id, last_logged in cursor.fetchall()
 
 #===============================================================================================================
 
@@ -186,11 +208,28 @@ for curio_id, last_logged in cursor.fetchall():
     days = (datetime.now() - last_logged_date).days
     if days > 30: status = "Inactive"
     else: status = "Active"
-    cursor.execute("""UPDATE curios
-                    SET status = ?
-                    WHERE id = ?""",
-                   (status, curio_id))
-    connection.commit()
+    cursor.execute("SELECT id, last_logged FROM curios")
+rows = cursor.fetchall()
+
+today = datetime.now()
+
+for curio_id, last_logged in rows:
+    last_logged_date = datetime.strptime(last_logged, "%Y-%m-%d")
+    days = (today - last_logged_date).days
+
+    if days > 30:
+        status = "Inactive"
+    else:
+        status = "Active"
+
+    cursor.execute("""
+        UPDATE curios
+        SET status = ?
+        WHERE id = ?
+    """, (status, curio_id))
+
+connection.commit()
+    
     
 
 # running loop and updating time

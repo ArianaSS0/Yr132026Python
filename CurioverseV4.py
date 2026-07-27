@@ -106,7 +106,7 @@ time_label.pack(side="left")
 def update_time():
     current_time = datetime.now().strftime("%H:%M")
     time_label.config(text=current_time)
-    root.after(60000, update_time) #run again in 60,000ms (1 minute)
+    root.after(60000, update_time) #runs every 60,000ms (1 minute)
     print("Time Updated")
 
 tk.Label(frame_top, text="    Weather:", font=("Arial", 10, "bold")).pack(side="left")
@@ -122,27 +122,28 @@ tk.Label(frame_top, text=f"{tempurature}°C").pack(side="left")
 middle_frame = tk.Frame(root)
 middle_frame.pack(expand=True, fill="both")
 tree = ttk.Treeview(middle_frame,
-    columns=("ID", "Name", "Description", "Category","Logg", "Status"),
+    columns=("ID", "Name", "Category","Logg", "Status"),
     show="headings")
+#text displayed at top
 tree.heading("ID", text="ID")
 tree.heading("Name", text="Name")
 tree.heading("Category", text="Category")
 tree.heading("Logg", text="Last Logged")
 tree.heading("Status", text="Status")
+# where info is displayed
 tree.column("ID", width=25)
 tree.column("Name", width=120)
 tree.column("Category", width=80)
 tree.column("Logg", width=75)
 tree.column("Status", width=50)
-scrollbar = ttk.Scrollbar(
-    middle_frame,
-    orient="vertical",
-    command=tree.yview)
+scrollbar = ttk.Scrollbar(middle_frame, orient="vertical", command=tree.yview)
 tree.configure(yscrollcommand=scrollbar.set)
 scrollbar.pack(side="right", fill="y")
 tree.pack(expand=True, fill="both")
-cursor.execute("SELECT id, last_logged FROM curios")
-for curio_id, last_logged in cursor.fetchall()
+cursor.execute("""SELECT "ID", "Name", "Category",Last_Logged, "Status" FROM curios""")
+rows = cursor.fetchall()
+for row in rows:
+    tree.insert("","end", values=row)
 
 #===============================================================================================================
 
@@ -173,6 +174,7 @@ button_edit = tk.Button(
     height=1,
     text="Edit Curio",
     command=lambda: edit_curio (root,cursor,connection,date_now,category_data))
+    # lambada: the way to pass functions without explicitly defining them
 button_edit.pack(side="left", padx=5, pady=2)
 
 #...............................................................................................................
@@ -202,6 +204,7 @@ button_logg.pack(side="left", padx=5, pady=2)
 
 #...............................................................................................................
 # Updating last logged info 
+
 today = datetime.now() # Gets current date
 for curio_id, last_logged in cursor.fetchall(): 
     last_logged_date = datetime.strptime(last_logged, "%Y-%m-%d") 
@@ -227,6 +230,7 @@ for curio_id, last_logged in rows:
         SET status = ?
         WHERE id = ?
     """, (status, curio_id))
+#...............................................................................................................
 
 connection.commit()
     

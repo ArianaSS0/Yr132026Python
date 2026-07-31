@@ -18,7 +18,7 @@ from tkinter import ttk
 import os
 #Date and time
 from datetime import datetime
-#Import pip requests thierd party lybrary from other code...
+#Import pip requests third party lyibrary from other code...
 #Curently using for temp and weather
 import requests #Notice everything taken from here makes startup take longer, I may need to add a loading screen...
 
@@ -30,10 +30,10 @@ import requests #Notice everything taken from here makes startup take longer, I 
 time_now = datetime.now().strftime("%H:%M:%S") #String format time
 #Date
 #date_now = "2026-06-25" #(Test)
-date_now = datetime.now().strftime("%Y-%m-%d") #red text hoppfully just error finder mistake :l
+date_now = datetime.now().strftime("%Y-%m-%d") #red text hoppfully just error finders mistake :l
 #Setting up Tempurature and weather
 city = "Auckland"
-data1 = requests.get(f"https://wttr.in/{city}?format=j1", timeout=5).json() #calls from javascript
+data1 = requests.get(f"https://wttr.in/{city}?format=j1", timeout=5).json() #calls from javascript, timeout affter 5 seconds alows program to move on with no internet
 #Get Tempurature
 tempurature = data1["current_condition"][0]["temp_C"]
 #Get Weather
@@ -233,7 +233,6 @@ for curio_id, last_logged in rows:
 #...............................................................................................................
 
 connection.commit()
-    
     
 
 # running loop and updating time

@@ -9,7 +9,7 @@ print("")
 
 #database tool
 import sqlite3 
-connection = sqlite3.connect("CURIO_STORAGE.db") #Creates/conects to a database file named company.db
+connection = sqlite3.connect("CURIO_STORAGE.db") #Creates/conects to a database file 
 cursor = connection.cursor() #Controll that sents instructions into database
 # GUI tool
 import tkinter as tk 
@@ -33,7 +33,8 @@ time_now = datetime.now().strftime("%H:%M:%S") #String format time
 date_now = datetime.now().strftime("%Y-%m-%d") #red text hoppfully just error finders mistake :l
 #Setting up Tempurature and weather
 city = "Auckland"
-data1 = requests.get(f"https://wttr.in/{city}?format=j1", timeout=5).json() #calls from javascript, timeout affter 5 seconds alows program to move on with no internet
+data1 = requests.get(f"https://wttr.in/{city}?format=j1", timeout=5).json() 
+#calls from javascript, timeout affter 5 seconds alows program to move on with no internet
 #Get Tempurature
 tempurature = data1["current_condition"][0]["temp_C"]
 #Get Weather

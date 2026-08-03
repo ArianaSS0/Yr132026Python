@@ -96,11 +96,11 @@ frame_top = tk.Frame(root)
 frame_top.pack(fill="x")
 
 #all the text and values for the top lable
-tk.Label(frame_top, text="  Date:", font=("Arial", 10, "bold")).pack(side="left")
+tk.Label(frame_top, text=" Date:", font=("Arial", 10, "bold")).pack(side="left")
 tk.Label(frame_top, text=date_now).pack(side="left")
 
 #time updates every minute
-tk.Label(frame_top, text="    Time:", font=("Arial", 10, "bold")).pack(side="left") 
+tk.Label(frame_top, text="  Time:", font=("Arial", 10, "bold")).pack(side="left") 
 time_label = tk.Label(frame_top, text="", font=("Arial", 10))
 time_label.pack(side="left")
 def update_time():
@@ -109,9 +109,9 @@ def update_time():
     root.after(60000, update_time) #runs every 60,000ms (1 minute)
     print("Time Updated")
 
-tk.Label(frame_top, text="    Weather:", font=("Arial", 10, "bold")).pack(side="left")
+tk.Label(frame_top, text="  Weather:", font=("Arial", 10, "bold")).pack(side="left")
 tk.Label(frame_top, text=weather).pack(side="left")
-tk.Label(frame_top, text="    Tempurature:", font=("Arial", 10, "bold")).pack(side="left")
+tk.Label(frame_top, text="  Tempurature:", font=("Arial", 10, "bold")).pack(side="left")
 tk.Label(frame_top, text=f"{tempurature}°C").pack(side="left") 
 #f string combines degrees symbol with stored value
 

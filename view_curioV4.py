@@ -5,7 +5,7 @@ def view_curio(root, cursor, connection, date_now, category_data):
     print("view_curios Button pressed")
     # Create popup and grabs curio info
     popup4 = tk.Toplevel(root)
-    popup4.title("Curios")
+    popup4.title("View Hobbys")
     popup4.geometry("650x200")
     cursor.execute("SELECT * FROM curios")
     rows = cursor.fetchall()

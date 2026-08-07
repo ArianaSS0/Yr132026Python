@@ -3,7 +3,7 @@ import tkinter as tk
 def edit_curio(root, cursor, connection, date_now, category_data):
     print("edit_curio Button pressed")
     popup2 = tk.Toplevel(root)
-    popup2.title("Edit Curio")
+    popup2.title("Edit Hobby")
     popup2.geometry("300x220")
 
     # Curio ID

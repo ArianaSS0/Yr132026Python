@@ -6,7 +6,7 @@ def add_curio(root, cursor, connection, date_now, category_data):
     print("add_curio Button pressed")
     # Creates popup
     popup1 = tk.Toplevel(root)
-    popup1.title("Add Curio")
+    popup1.title("Add Hobby")
     popup1.geometry("250x200") #Y,X
     #makes curio state automatically active
     state2 = ("Active")

@@ -4,7 +4,7 @@ def delete_curio(root, cursor, connection, date_now, category_data):
     print("delete_curio Button pressed")
      # Create popup to delete curio
     popup3 = tk.Toplevel(root)
-    popup3.title("Delete Curio")
+    popup3.title("Delete Hobby")
     popup3.geometry("250x200") #Y,X
     # Deleting curio code
     tk.Label(popup3, text="Enter Curio ID:").pack(pady=5)

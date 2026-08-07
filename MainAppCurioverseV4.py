@@ -75,7 +75,7 @@ print("Database and table successfully generated")
 # Startup #
 
 root = tk.Tk()
-root.title("Curioverse (V4)") #Name
+root.title("Curioverse - Hobby Tracker") #Name
 root.geometry('500x300') #Width x Hight
 root["bg"] = "#939071" #Bg colour
 
@@ -161,7 +161,7 @@ footer.pack(side="bottom", fill="x") #locates at bottom of tab
 from add_curioV4 import add_curio
 
 # leftover button operation formatting
-button_add = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "Add Curio", command=lambda: add_curio(root,cursor,connection,date_now,category_data))
+button_add = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "Add Hobby", command=lambda: add_curio(root,cursor,connection,date_now,category_data))
 button_add.pack(side="left", padx=5, pady=2) #button padding from boarder
 
 #...............................................................................................................
@@ -173,7 +173,7 @@ button_edit = tk.Button(
     font=("Arial", 11),
     width=9,
     height=1,
-    text="Edit Curio",
+    text="Edit Hobby",
     command=lambda: edit_curio (root,cursor,connection,date_now,category_data))
     # lambada: the way to pass functions without explicitly defining them
 button_edit.pack(side="left", padx=5, pady=2)
@@ -182,21 +182,21 @@ button_edit.pack(side="left", padx=5, pady=2)
 #Button 3
 #Allows user to delete curios
 from delete_curioV4 import delete_curio
-button_delete = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "Delete Curio", command=lambda: delete_curio (root,cursor,connection,date_now,category_data))
+button_delete = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "Delete Hobby", command=lambda: delete_curio (root,cursor,connection,date_now,category_data))
 button_delete.pack(side="left", padx=5, pady=2)
 
 #...............................................................................................................
 #Button 4
 #Allows user to view curios
 from view_curioV4 import view_curio
-button_view = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "View Curios", command=lambda: view_curio(root,cursor,connection,date_now,category_data))
+button_view = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "View Hobby", command=lambda: view_curio(root,cursor,connection,date_now,category_data))
 button_view.pack(side="left", padx=5, pady=2)
 
 #...............................................................................................................
 #Button 5
 #Logg button, when clicked; changes last logged to present day.
 from logg_curioV4 import logg_curio
-button_logg = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "Logg Curio", command= lambda:logg_curio(root,cursor,connection,date_now,category_data))
+button_logg = tk.Button(footer, font = ("Arial",11), width = 9, height = 1, text = "Log Hobby", command= lambda:logg_curio(root,cursor,connection,date_now,category_data))
 button_logg.pack(side="left", padx=5, pady=2)
 
 #===============================================================================================================

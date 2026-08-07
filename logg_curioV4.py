@@ -5,7 +5,7 @@ from datetime import datetime
 def logg_curio(root, cursor, connection, date_now, category_data):
     print("logg_curio Button pressed")
     popup3 = tk.Toplevel(root)
-    popup3.title("Logg Curio")
+    popup3.title("Logg Hobby")
     popup3.geometry("300x220")
 
     # Curio ID

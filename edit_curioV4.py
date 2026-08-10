@@ -1,31 +1,39 @@
 import tkinter as tk
 
+#Imports data from database?
 def edit_curio(root, cursor, connection, date_now, category_data):
     print("edit_curio Button pressed")
+
+    #Creates the tab everything is displayed within
     popup2 = tk.Toplevel(root)
-    popup2.title("Edit Hobby")
+    popup2.title("Edit Hobby") #Tab name
     popup2.geometry("300x220")
+
+#...............................................................................................................
 
     # Curio ID
     tk.Label(popup2, text="Curio ID").pack()
     id_entry = tk.Entry(popup2)
     id_entry.pack()
-    # Field to edit
-    tk.Label(popup2, text="Edit").pack()
-    edit_option = tk.StringVar()
-    edit_option.set("Name")  # Default option
-    tk.OptionMenu(
-        popup2,
-        edit_option,
-        "Name",
-        "Category",
-        "Description"
-    ).pack()
+    #Here the user enters the id of the curio they wish to edit
 
-    # New value
-    tk.Label(popup2, text="New Value").pack()
-    value_entry = tk.Entry(popup2)
-    value_entry.pack()
+#...............................................................................................................
+
+# Curio Name
+    tk.Label(popup2, text="Name").pack()
+    name_entry = tk.Entry(popup2)
+    name_entry.pack()
+    #Here the user enters the new name of the curio
+
+#...............................................................................................................
+
+# Curio Description
+    tk.Label(popup2, text="Description").pack()
+    description_entry = tk.Entry(popup2)
+    description_entry.pack()
+    #Here the user enters the new description of the curio
+
+#...............................................................................................................
 
     #category dropdown menue
     tk.Label(popup2, text="Category").pack()
@@ -36,6 +44,9 @@ def edit_curio(root, cursor, connection, date_now, category_data):
         category_choice,
         *category_data)
     category_menu.pack()
+    #takes list from main python and uses it as a dropdown within the tab
+
+#...............................................................................................................
 
     def save_edit():
         try:

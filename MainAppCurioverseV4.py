@@ -49,6 +49,7 @@ print("Data recieved")
 
 #Category list
 category_data = list(("Creative","Outdoor","Collection","Culinary","Digital","Entertainment","Fitness","Knowladge"))
+#Used later in dropdown menues to help the user choose what category thier hobby resides in
 
 #===============================================================================================================
 
@@ -64,7 +65,7 @@ cursor.execute("""
                         last_logged TEXT NOT NULL,
                         status TEXT NOT NULL
                     ) 
-            """) # Creates 6 tables, NOT NULL means no empty input
+            """) # Creates 7 tables to store curio data, NOT NULL means no empty input
 
 print("Database and table successfully generated")
 

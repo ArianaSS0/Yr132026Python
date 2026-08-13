@@ -48,36 +48,54 @@ def edit_curio(root, cursor, connection, date_now, category_data):
 
 #...............................................................................................................
 
+
     def save_edit():
+            
+        #Transfuring user input from the values to something SQLite can read
+        #!!! With the .get() !!!
+        curio_id = int(id_entry.get())
+        new_name = name_entry.get()
+        new_description = description_entry.get()
+        new_category = category_choice.get()
+
         try:
-            curio_id = int(id_entry.get())
-            new_value = value_entry.get()
-            if edit_option.get() == "Name":
-                cursor.execute(
-                    "UPDATE curios SET name = ? WHERE id = ?",
-                    (new_value, curio_id)
+            cursor.execute ("""
+                UPDATE curios
+                SET name = ?, description = ?, category = ?
+                WHERE id = ?
+                """,
+                #sets up new name description and category
+                #WHERE id = ?   gathers id to save entrys to
+                (
+                    new_name,
+                    new_description,
+                    new_category,
+                    curio_id
                 )
-            elif edit_option.get() == "Category": 
-                new_value = category_choice.get()
-                cursor.execute(
-                    "UPDATE curios SET category = ? WHERE id = ?",
-                    (new_value, curio_id)
-                )
-            elif edit_option.get() == "Description":
-                cursor.execute(
-                    "UPDATE curios SET description = ? WHERE id = ?",
-                    (new_value, curio_id)
-                )
+                #Gathers user entrys and prpeps them to save
+            )
+
             connection.commit()
+            #saves new information to database
+
             if cursor.rowcount == 0:
                 print("No Curio with that ID found.")
+                #Error message for incorect id input
+
             else:
                 print("Curio successfully edited.")
                 popup2.destroy()
+                #Prints sucsess message and closes tab
+
         except ValueError:
             print("Please enter a valid ID.")
+            #Another error mesage
+
+#...............................................................................................................
+
     tk.Button(
         popup2,
         text="Update",
         command=save_edit
     ).pack(pady=10)
+    #tab formatting

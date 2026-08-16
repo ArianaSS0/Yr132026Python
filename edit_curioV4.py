@@ -56,9 +56,11 @@ def edit_curio(root, cursor, connection, date_now, category_data):
             #!!! With the .get() !!!
             #also .get without .strip - if not... means blank infor can be entered
             curio_id = int(id_entry.get())
-            new_name = name_entry.get().strip
+            new_name = name_entry.get().strip()
             if not new_name:
                 print("Error, hobby must have name")
+                return
+                 #prints name error mesage
                         
             new_description = description_entry.get()
             new_category = category_choice.get()

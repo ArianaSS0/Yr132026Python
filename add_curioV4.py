@@ -40,10 +40,11 @@ def add_curio(root, cursor, connection, date_now, category_data):
 #...............................................................................................................
 
     def save_curio():
-        name = name2.get().strip
+        name = name2.get().strip()
 
         if not name:
             print("Error, hoby must have name")
+            return
             #prints name error mesage
 
 #...............................................................................................................

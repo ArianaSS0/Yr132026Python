@@ -28,7 +28,6 @@ def delete_curio(root, cursor, connection, date_now, category_data):
     tk.Button(popup3, text="Delete", command=confirm_delete).pack(pady=10)
 
     button_delete = tk.Button(
-        footer,
         font=("Arial", 12),
         width=10,
         height=1,

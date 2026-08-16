@@ -208,12 +208,6 @@ button_logg.pack(side="left", padx=5, pady=2)
 # Updating last logged info 
 
 today = datetime.now() # Gets current date
-for curio_id, last_logged in cursor.fetchall(): 
-    last_logged_date = datetime.strptime(last_logged, "%Y-%m-%d") 
-    days = (datetime.now() - last_logged_date).days
-    if days > 30: status = "Inactive"
-    else: status = "Active"
-    cursor.execute("SELECT id, last_logged FROM curios")
 rows = cursor.fetchall()
 
 today = datetime.now()

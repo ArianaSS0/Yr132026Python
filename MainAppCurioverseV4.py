@@ -119,6 +119,19 @@ tk.Label(frame_top, text=f"{tempurature}°C").pack(side="left")
 
 #===============================================================================================================
 
+#Reload curios treeview button
+def reload_curios():
+    for item in tree.get_children():
+        tree.delete(item)
+
+    #Runs code
+    cursor.execute("""SELECT "ID", "Name", "Category",Last_Logged, "Status" FROM curios""")
+    rows = cursor.fetchall()
+    for row in rows:
+        tree.insert("","end", values=row)
+
+#===============================================================================================================
+
 # Middle play area #
 
 middle_frame = tk.Frame(root)
@@ -126,22 +139,32 @@ middle_frame.pack(expand=True, fill="both")
 tree = ttk.Treeview(middle_frame,
     columns=("ID", "Name", "Category","Logg", "Status"),
     show="headings")
+
 #text displayed at top
 tree.heading("ID", text="ID")
 tree.heading("Name", text="Name")
 tree.heading("Category", text="Category")
 tree.heading("Logg", text="Last Logged")
 tree.heading("Status", text="Status")
-# where info is displayed
+
+#where info is displayed
 tree.column("ID", width=25)
 tree.column("Name", width=120)
 tree.column("Category", width=80)
 tree.column("Logg", width=75)
 tree.column("Status", width=50)
+
+#scrolling function for displaying multiple curios
 scrollbar = ttk.Scrollbar(middle_frame, orient="vertical", command=tree.yview)
 tree.configure(yscrollcommand=scrollbar.set)
 scrollbar.pack(side="right", fill="y")
 tree.pack(expand=True, fill="both")
+
+#Reload treeview button
+button_reload = tk.Button(middle_frame,text="Reload",command=reload_curios)
+button_reload.pack(side="bottom", pady=5)
+
+#Runs code
 cursor.execute("""SELECT "ID", "Name", "Category",Last_Logged, "Status" FROM curios""")
 rows = cursor.fetchall()
 for row in rows:

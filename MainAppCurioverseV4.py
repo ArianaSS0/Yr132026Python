@@ -26,22 +26,39 @@ import requests #Notice everything taken from here makes startup take longer, I 
 
 # Getting real time values # 
 
-#Time
+
+    #Time
 time_now = datetime.now().strftime("%H:%M:%S") #String format time
-#Date
-#date_now = "2026-06-25" #(Test)
+
+    #Date
+    #date_now = "2026-06-25" #(Test)
 date_now = datetime.now().strftime("%Y-%m-%d") #red text hoppfully just error finders mistake :l
-#Setting up Tempurature and weather
-city = "Auckland"
-data1 = requests.get(f"https://wttr.in/{city}?format=j1", timeout=5).json() 
-#calls from javascript, timeout affter 5 seconds alows program to move on with no internet
-#Get Tempurature
-tempurature = data1["current_condition"][0]["temp_C"]
-#Get Weather
-weather = data1["current_condition"][0]["weatherDesc"][0]["value"]
-#Print results
-#print(tempurature,"°C", weather)
-print("Data recieved")
+
+def get_data():
+
+    #Setting up Tempurature and weather
+    city = "Auckland"
+
+    try:
+        api = requests.get(f"https://wttr.in/{city}?format=j1", timeout=5).json() 
+        #calls from javascript, timeout affter 5 seconds alows program to move on with no internet
+
+        #Get Tempurature
+        tempurature = api["current_condition"][0]["temp_C"]
+
+        #Get Weather
+        weather = api["current_condition"][0]["weatherDesc"][0]["value"]
+        #Print results
+        #print(tempurature,"°C", weather)
+        print("Data recieved")
+        return weather, tempurature
+
+    except requests.exceptions.ConnectionError:
+        print("No internet")
+    except requests.exceptions.Timeout:
+        print("Timed out")
+    except requests.exceptions.RequestException:
+        print("API error")
 
 #===============================================================================================================
 

@@ -135,10 +135,11 @@ def reload_curios():
 # Middle play area #
 
 middle_frame = tk.Frame(root)
-middle_frame.pack(expand=True, fill="both")
+middle_frame.pack(expand=True, fill="both") #Takes up all space between window and footer
 tree = ttk.Treeview(middle_frame,
     columns=("ID", "Name", "Category","Logg", "Status"),
-    show="headings")
+    show="headings",
+    height=5)
 
 #text displayed at top
 tree.heading("ID", text="ID")
@@ -158,7 +159,7 @@ tree.column("Status", width=50)
 scrollbar = ttk.Scrollbar(middle_frame, orient="vertical", command=tree.yview)
 tree.configure(yscrollcommand=scrollbar.set)
 scrollbar.pack(side="right", fill="y")
-tree.pack(expand=True, fill="both")
+tree.pack(expand=True, fill="both") #Takes up all avalible space in the middle area
 
 #Reload treeview button
 button_reload = tk.Button(middle_frame,text="Reload",command=reload_curios)
@@ -175,7 +176,7 @@ for row in rows:
 # Footer bar # 
 # (And Buttons!)
 
-footer = tk.Frame(root, width=100, height=60, bg="light yellow") #frame
+footer = tk.Frame(root, width=100, height=50, bg="light yellow") #frame
 footer.pack_propagate(False) #prevents frame from shrinking?
 footer.pack(side="bottom", fill="x") #locates at bottom of tab
 

@@ -1,10 +1,11 @@
+# Importing nesesary modules
 import tkinter as tk
 
-#Imports data from database?
+#Imports data from database
 def edit_curio(root, cursor, connection, date_now, category_data):
     print("edit_curio Button pressed")
 
-    #Creates the tab everything is displayed within
+    #Creates the tab/window everything is displayed within
     popup2 = tk.Toplevel(root)
     popup2.title("Edit Hobby") #Tab name
     popup2.geometry("300x220")

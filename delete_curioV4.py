@@ -1,8 +1,14 @@
+# Importing nesesary modules
 import tkinter as tk
 
+#looks through database
 def delete_curio(root, cursor, connection, date_now, category_data):
     print("delete_curio Button pressed")
      # Create popup to delete curio
+
+#...............................................................................................................
+
+    #Creates window
     popup3 = tk.Toplevel(root)
     popup3.title("Delete Hobby")
     popup3.geometry("250x200") #Y,X
@@ -10,6 +16,10 @@ def delete_curio(root, cursor, connection, date_now, category_data):
     tk.Label(popup3, text="Enter Curio ID:").pack(pady=5)
     id_entry = tk.Entry(popup3)
     id_entry.pack()
+
+#...............................................................................................................
+
+    #Checks for errors before deleting hobby/curio
     def confirm_delete():
         try:
             curio_id = int(id_entry.get())
@@ -24,9 +34,11 @@ def delete_curio(root, cursor, connection, date_now, category_data):
                 print("Curio sucsessfully deleted.")
         except ValueError:
             print("Please enter a valid ID.")
+
+#...............................................................................................................
+
     #Delete button
     tk.Button(popup3, text="Delete", command=confirm_delete).pack(pady=10)
-
     button_delete = tk.Button(
         font=("Arial", 12),
         width=10,
@@ -34,4 +46,6 @@ def delete_curio(root, cursor, connection, date_now, category_data):
         text="Delete Curio",
         command=delete_curio
     )
+
+#...............................................................................................................
     button_delete.pack(side="left", padx=12, pady=5)

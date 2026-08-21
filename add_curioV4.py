@@ -1,13 +1,17 @@
 #Add curio code
 
+# Importing nesesary modules
 import tkinter as tk
 
 #...............................................................................................................
 
-
+#Collects data from database
 def add_curio(root, cursor, connection, date_now, category_data):
     print("add_curio Button pressed")
-    # Creates popup
+
+#...............................................................................................................
+
+    # Creates popup/window
     popup1 = tk.Toplevel(root)
     popup1.title("Add Hobby")
     popup1.geometry("250x200") #Y,X

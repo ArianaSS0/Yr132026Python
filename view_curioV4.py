@@ -1,16 +1,25 @@
+# Importing nesesary modules
 import tkinter as tk
 from tkinter import ttk
 
+#...............................................................................................................
+
+#looks through database
 def view_curio(root, cursor, connection, date_now, category_data):
     print("view_curios Button pressed")
-    # Create popup and grabs curio info
+
+#...............................................................................................................
+
+    # Create popup/window and grabs curio info
     popup4 = tk.Toplevel(root)
     popup4.title("View Hobbys")
     popup4.geometry("650x200")
     cursor.execute("SELECT * FROM curios")
     rows = cursor.fetchall()
 
-    #Displaying results
+#...............................................................................................................
+
+    #Displaying all information about curios within table/tree
     tree = ttk.Treeview(popup4,
     columns=("ID", "Name", "Category", "Description", "Date", "Logg", "Status"),
     show="headings")
@@ -37,15 +46,18 @@ def view_curio(root, cursor, connection, date_now, category_data):
     tree.pack(expand=True, fill="both")
     cursor.execute("SELECT * FROM curios")
 
+#...............................................................................................................
+
     rows = cursor.fetchall()
     for row in rows:
         tree.insert("", "end", values=row)
+
+#...............................................................................................................
 
     tk.Label(popup4, text="Search Name").pack()
     search_entry = tk.Entry(popup4)
     search_entry.pack()
     def search_curios():
-
         search = search_entry.get()
 
         cursor.execute("""
@@ -59,6 +71,8 @@ def view_curio(root, cursor, connection, date_now, category_data):
             tree.delete(item)
         for row in rows:
          tree.insert("", "end", values=row)
+
+#...............................................................................................................
     tk.Button(
     popup4,
     text="Search", command=search_curios).pack()
